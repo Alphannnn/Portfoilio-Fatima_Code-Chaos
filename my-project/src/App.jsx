@@ -8,6 +8,8 @@ import CustomCursor from "./components/customCursor";
 import AboutSection from "./components/AboutSection";
 import Project from "./components/Project";
 import ContactSection from "./components/ContactSection";
+import Footer from "./components/Footer";
+import ProgressBar from "./components/ProgressBar";
 export default function App() {
 
 
@@ -27,6 +29,8 @@ export default function App() {
      <AboutSection />
      <Project />
      <ContactSection />
+     <Footer />
+     <ProgressBar />
      </>
   )
 }
