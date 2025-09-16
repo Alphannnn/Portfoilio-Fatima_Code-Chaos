@@ -7,6 +7,7 @@ import HeroSection from "./components/HeroSection";
 import CustomCursor from "./components/customCursor";
 import AboutSection from "./components/AboutSection";
 import Project from "./components/Project";
+import ContactSection from "./components/ContactSection";
 export default function App() {
 
 
@@ -25,6 +26,7 @@ export default function App() {
      <CustomCursor />
      <AboutSection />
      <Project />
+     <ContactSection />
      </>
   )
 }

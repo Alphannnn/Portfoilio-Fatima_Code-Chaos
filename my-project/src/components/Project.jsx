@@ -200,7 +200,7 @@ const Project = () => {
       <div ref={triggerRef} className="overflow-hidden opacity-0">
           <div ref={horizontalRef} className="horizontal-section flex md:w-[400%] w-[420%] ">
                {projectImages.map((project)=>(
-                    <div Loading key={project.id}
+                    <div key={project.id}
                     className="panel relative flex items-center justify-center ">
                           <div className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 ">
                                   <img 
