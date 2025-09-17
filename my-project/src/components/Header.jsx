@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiGithub, FiLinkedin, FiInstagram, FiMenu, FiX } from "react-icons/fi";
 
 const Header = () => {
@@ -13,8 +13,29 @@ const Header = () => {
   const openContactForm = () => setContactFormOpen(true);
   const closeContactForm = () => setContactFormOpen(false);
 
+  // ✅ Sticky navbar after scrolling past header
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // When you scroll down more than 80px, make navbar sticky
+      if (window.scrollY > 80) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="absolute w-full z-50 transition-all duration-300">
+    <header
+      className={`w-full z-50 transition-all duration-300 ${
+        isSticky ? "fixed top-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md" : "absolute"
+      }`}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
         {/* Logo with animation */}
         <motion.div
@@ -40,26 +61,30 @@ const Header = () => {
 
         {/* Navbar (only lg+) */}
         <nav className="hidden lg:flex space-x-8">
-          {["Home", "About", "Projects", "Experience", "Contact"].map(
-            (item, index) => (
-              <motion.a
-                key={item}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 20,
-                  delay: 0.7 + index * 0.2,
-                }}
-                className="cursor-none relative text-gray-800 dark:text-gray-200 hover:text-violet-600 dark:hover:text-violet-400 font-medium transition-colors duration-300 group cursor-default"
-                href="#"
-              >
-                {item}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-violet-600 group-hover:w-full transition-all duration-300"></span>
-              </motion.a>
-            )
-          )}
+          {[
+            { name: "Home", href: "#home" },
+            { name: "About", href: "#about" },
+            { name: "Projects", href: "#projects" },
+            { name: "Experience", href: "#experience" },
+            { name: "Contact", href: "#contact" },
+          ].map((item, index) => (
+            <motion.a
+              key={item.name}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                type: "spring",
+                stiffness: 100,
+                damping: 20,
+                delay: 0.7 + index * 0.2,
+              }}
+              className="cursor-none relative text-gray-800 dark:text-gray-200 hover:text-violet-600 dark:hover:text-violet-400 font-medium transition-colors duration-300 group cursor-default"
+              href={item.href}
+            >
+              {item.name}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-violet-600 group-hover:w-full transition-all duration-300"></span>
+            </motion.a>
+          ))}
         </nav>
 
         {/* Social Icons + Hire Me (only lg+) */}
@@ -148,18 +173,22 @@ const Header = () => {
         className="lg:hidden overflow-hidden bg-white dark:bg-gray-900 shadow-lg px-4 py-5 space-y-5 "
       >
         <nav className="flex flex-col space-y-3 ">
-          {["Home", "About", "Projects", "Experience", "Contact"].map(
-            (item) => (
-              <a
-                onClick={toggleMenu}
-                className="text-gray-300 font-medium py-2 cursor-default"
-                key={item}
-                href="#"
-              >
-                {item}
-              </a>
-            )
-          )}
+          {[
+            { name: "Home", href: "#home" },
+            { name: "About", href: "#about" },
+            { name: "Projects", href: "#projects" },
+            { name: "Experience", href: "#experience" },
+            { name: "Contact", href: "#contact" },
+          ].map((item) => (
+            <a
+              onClick={toggleMenu}
+              className="text-gray-300 font-medium py-2 cursor-default"
+              key={item.name}
+              href={item.href}
+            >
+              {item.name}
+            </a>
+          ))}
         </nav>
 
         <div className="pt-4 border-t border-gray-200 dark:border-gray-700 ">
