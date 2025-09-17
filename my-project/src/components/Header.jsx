@@ -33,7 +33,7 @@ const Header = () => {
   return (
     <header
       className={`w-full z-50 transition-all duration-300 ${
-        isSticky ? "fixed top-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md" : "absolute"
+        isSticky ? "lg:fixed top-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md" : "absolute"
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
