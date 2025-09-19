@@ -40,63 +40,74 @@ function ContactSection() {
   };
 
   useEffect(() => {
-  gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
 
-  const cleanUp = () => {
-    ScrollTrigger.getAll().forEach((st) => {
-      // Make sure st.kill exists before calling
-      if (st && st.kill && st.vars.trigger === sectionRef.current) {
-        st.kill();
-      }
+    const cleanUp = () => {
+      ScrollTrigger.getAll().forEach((st) => {
+        // Make sure st.kill exists before calling
+        if (st && st.kill && st.vars.trigger === sectionRef.current) {
+          st.kill();
+        }
+      });
+    };
+
+    cleanUp();
+
+    gsap.set(circleRef.current, { scale: 1, backgroundColor: "white" });
+    gsap.set(initialTextRef.current, { opacity: 1 });
+    gsap.set(finalTextRef.current, { opacity: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "+=200%",
+        pin: true,
+        scrub: 0.5,
+        anticipatePin: 1,
+        fastScrollEnd: true,
+        preventOverlaps: true,
+        invalidateOnRefresh: true,
+      },
     });
-  };
 
-  cleanUp();
+    tl.to(
+      circleRef.current,
+      {
+        scale: 5,
+        backgroundColor: "#9333EA",
+        ease: "power1.inOut",
+        duration: 0.5,
+      },
+      0
+    );
 
-  gsap.set(circleRef.current, { scale: 1, backgroundColor: "white" });
-  gsap.set(initialTextRef.current, { opacity: 1 });
-  gsap.set(finalTextRef.current, { opacity: 0 });
+    tl.to(
+      initialTextRef.current,
+      {
+        opacity: 0,
+        ease: "power1.out",
+        duration: 0.2,
+      },
+      0.1
+    );
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: sectionRef.current,
-      start: "top top",
-      end: "+=200%",
-      pin: true,
-      scrub: 0.5,
-      anticipatePin: 1,
-      fastScrollEnd: true,
-      preventOverlaps: true,
-      invalidateOnRefresh: true,
-    },
-  });
+    tl.to(
+      circleRef.current,
+      {
+        scale: 15,
+        backgroundColor: "#E9D5FF",
+        boxShadow: "0 0 50px 20px rgba(233 , 213 , 255 , 0.3)",
+        ease: "power2.inOut",
+        duration: 0.5,
+      },
+      0.5
+    );
 
-  tl.to(circleRef.current, {
-    scale: 5,
-    backgroundColor: "#9333EA",
-    ease: "power1.inOut",
-    duration: 0.5,
-  }, 0);
+    tl.to(finalTextRef.current, { opacity: 1 }, 0.7);
 
-  tl.to(initialTextRef.current, {
-    opacity: 0,
-    ease: "power1.out",
-    duration: 0.2,
-  }, 0.1);
-
-  tl.to(circleRef.current, {
-    scale: 15,
-    backgroundColor: "#E9D5FF",
-    boxShadow: "0 0 50px 20px rgba(233 , 213 , 255 , 0.3)",
-    ease: "power2.inOut",
-    duration: 0.5,
-  }, 0.5);
-
-  tl.to(finalTextRef.current, { opacity: 1 }, 0.7);
-
-  return cleanUp;
-}, []);
-
+    return cleanUp;
+  }, []);
 
   return (
     <section
@@ -121,16 +132,19 @@ function ContactSection() {
           ref={finalTextRef}
           className="text-center relative flex flex-col items-center justify-center opacity-0"
         >
+          
           <h1 className="text-black md:w-[15rem] w-[21rem] lg:scale-[0.2] sm:scale-[0.14] scale-[0.05] md:font-bold text-sm sm:text-base leading-none mb-7 md:mb-5">
             Step Into The Future With Fatima_Code&Chaos!
           </h1>
           <p className="text-black lg:w-[40rem] w-[20rem] absolute sm:mt-3 mt-1 md:scale-[0.1] scale-[0.068]">
-             I’m still learning and growing in web development, and that’s what makes my work fresh and creative.
-            Along the way, I also teach front-end development in simple, beginner-friendly steps. If you want to
-            start learning front-end development I’d love to guide you. You’ll get a clear outline, project-based
-            learning, and personal support. I’m also open for internships or job opportunities to gain more real
-            experience. Need a personal brand website? I’d be happy to design and build it for you.  Let’s connect
-            and make something amazing together!
+            I’m still learning and growing in web development, and that’s what
+            makes my work fresh and creative. Looking for a web developer who
+            brings creative solutions and delivers work people love? I
+            craft websites that stand out, combining clean design, smooth
+            functionality, and attention to detail. Whether it’s a personal
+            brand site or a complex project, I make your vision shine online and
+            leave a lasting impression. Let’s create something exceptional
+            together!
           </p>
 
           {/* ✅ Let's Contact Button */}
@@ -157,11 +171,18 @@ function ContactSection() {
               initial={{ scale: 0.8, opacity: 0, y: 30 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: 30 }}
-              transition={{ type: "spring", damping: 30, stiffness: 200, duration: 0.8 }}
+              transition={{
+                type: "spring",
+                damping: 30,
+                stiffness: 200,
+                duration: 0.8,
+              }}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md p-6"
             >
               <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold text-gray-300">Get In Touch</h1>
+                <h1 className="text-2xl font-bold text-gray-300">
+                  Get In Touch
+                </h1>
                 <button onClick={closeContactForm} className="cursor-default">
                   ✕
                 </button>
@@ -169,7 +190,9 @@ function ContactSection() {
 
               <form ref={form} onSubmit={sendEmail} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Name</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    Name
+                  </label>
                   <input
                     type="text"
                     name="from_name"
@@ -178,7 +201,9 @@ function ContactSection() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    Email
+                  </label>
                   <input
                     type="email"
                     name="reply_to"
@@ -187,7 +212,9 @@ function ContactSection() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Message</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    Message
+                  </label>
                   <textarea
                     rows="4"
                     name="message"
