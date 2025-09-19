@@ -5,7 +5,28 @@
 html {
   scroll-behavior: smooth;
   cursor: none; /* Hide default cursor */
+  color: white !important;
+  text-decoration: none;
+  
 }
+
+nav a , .colors a{
+   -webkit-text-fill-color: white !important; /* Chrome, Safari */
+  -moz-text-fill-color: white !important;    /* Firefox */
+  color: white;
+}
+
+nav a:hover {
+  color: #a78bfa !important; /* Tailwind violet-400 */
+  -webkit-text-fill-color: #a78bfa !important;
+  -moz-text-fill-color: #a78bfa !important;}
+
+.bg-nav{
+  background-color:#1E2836;
+}
+
+
+
 
 body {
   overflow-x: hidden;
@@ -93,3 +114,10 @@ section {
     @apply bg-background text-foreground ;
   }
 }
+
+
+
+
+
+
+  

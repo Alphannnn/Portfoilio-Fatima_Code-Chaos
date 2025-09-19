@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FiGithub, FiLinkedin, FiInstagram, FiMenu, FiX } from "react-icons/fi";
+import emailjs from "@emailjs/browser";
 
 const Header = () => {
   //  Toggle the menu
@@ -16,6 +17,11 @@ const Header = () => {
   // ✅ Sticky navbar after scrolling past header
   const [isSticky, setIsSticky] = useState(false);
 
+
+  const notes = () => {
+     alert('Notes will be added soon!')
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       // When you scroll down more than 80px, make navbar sticky
@@ -30,10 +36,38 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // ✅ EmailJS form ref
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_cx7ifsc",
+        "template_2lw7xcz",
+        form.current,
+        "zWJ-O_krKiPi_KCow"
+      )
+      .then(
+        (result) => {
+          console.log("Message sent:", result.text);
+          alert("Message Sent Successfully!");
+          closeContactForm();
+        },
+        (error) => {
+          console.log("Error:", error.text);
+          alert("Failed to send message. Please try again.");
+        }
+      );
+  };
+
   return (
     <header
       className={`w-full z-50 transition-all duration-300 ${
-        isSticky ? "lg:fixed top-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md" : "absolute"
+        isSticky
+          ? "lg:fixed top-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md bg-nav"
+          : "absolute"
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
@@ -62,14 +96,15 @@ const Header = () => {
         {/* Navbar (only lg+) */}
         <nav className="hidden lg:flex space-x-8">
           {[
-            { name: "Home", href: "#home" },
+            { name: "Home", href: "#home"},
             { name: "About", href: "#about" },
             { name: "Projects", href: "#projects" },
-            { name: "Experience", href: "#experience" },
+            { name: "Notes", href: "#experience" , onClick:notes },
             { name: "Contact", href: "#contact" },
           ].map((item, index) => (
             <motion.a
               key={item.name}
+               onClick={item.onClick}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -88,7 +123,7 @@ const Header = () => {
         </nav>
 
         {/* Social Icons + Hire Me (only lg+) */}
-        <div className=" hidden lg:flex items-center space-x-4">
+        <div className=" hidden lg:flex items-center space-x-4 colors">
           <motion.a
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -97,7 +132,8 @@ const Header = () => {
               delay: 1.3,
             }}
             className="cursor-none text-gray-700 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-300 cursor-default"
-            href="#"
+            href="https://github.com/Alphannnn"
+            target="_blank"
           >
             <FiGithub className="w-5 h-5" />
           </motion.a>
@@ -110,7 +146,8 @@ const Header = () => {
               delay: 1.3,
             }}
             className="text-gray-700 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-300 cursor-default"
-            href="#"
+            href="https://www.linkedin.com/in/fatima-naeem-ul-haq-251406264/"
+            target="_blank"
           >
             <FiLinkedin className="w-5 h-5" />
           </motion.a>
@@ -123,7 +160,8 @@ const Header = () => {
               delay: 1.3,
             }}
             className="text-gray-700 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-300 cursor-default"
-            href="#"
+            href="https://www.instagram.com/fatima_codenchaos/?hl=en"
+            target="_blank"
           >
             <FiInstagram className="w-5 h-5" />
           </motion.a>
@@ -250,7 +288,7 @@ const Header = () => {
               </div>
 
               {/* {Input Forms} */}
-              <form className="space-y-4">
+              <form ref={form} onSubmit={sendEmail} className="space-y-4">
                 <div>
                   <label
                     htmlFor="name"
@@ -261,6 +299,7 @@ const Header = () => {
                   <input
                     type="text"
                     id="name"
+                    name="from_name"
                     placeholder="Your Name"
                     className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:borer-violet-500 bg-gray-700"
                   />
@@ -276,6 +315,7 @@ const Header = () => {
                   <input
                     type="email"
                     id="email"
+                    name="reply_to"
                     placeholder="Your Email"
                     className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:borer-violet-500 bg-gray-700"
                   />
@@ -291,6 +331,7 @@ const Header = () => {
                   <textarea
                     rows="4"
                     id="message"
+                    name="message"
                     placeholder="How can I help you?"
                     className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:borer-violet-500 bg-gray-700"
                   ></textarea>

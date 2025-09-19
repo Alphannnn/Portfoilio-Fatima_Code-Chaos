@@ -6,10 +6,12 @@ import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import CustomCursor from "./components/customCursor";
 import AboutSection from "./components/AboutSection";
+
 import Project from "./components/Project";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import ProgressBar from "./components/ProgressBar";
+import LogosSection from "./components/logo";
 
 export default function App() {
   useEffect(() => {
@@ -29,6 +31,7 @@ export default function App() {
       <CustomCursor />
       <div id="about">
         <AboutSection />
+         
       </div>
       <div id="projects">
         <Project />
@@ -38,6 +41,8 @@ export default function App() {
       </div>
       <Footer />
       <ProgressBar />
+
+      
     </>
   );
 }

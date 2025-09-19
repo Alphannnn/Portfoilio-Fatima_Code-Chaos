@@ -15,35 +15,38 @@ const Project = () => {
 
   //Project Images
   const projectImages = [  
-    {
-      id : 1,
-      title : "E-commerce Website" , 
-      imageSrc : '/images/project-1.png',
-    
-  }
-  ,{
-      id : 2,
-      title : "3D-Gamming Website" , 
-      imageSrc : '/images/project-2.png',
-    
-  }
-  ,
   {
-      id : 3,
-      title : "3D-Robo Website" , 
-      imageSrc : '/images/project-3.png',
-    
+    id: 1,
+    title: "3D-Robo",
+    imageSrc: '/images/first.png',
+    link: "https://alphannnn.github.io/Robo-MCODE/"
+  },
+  {
+    id: 2,
+    title: "E-Commerce-Website (Cara)",
+    imageSrc: '/images/sec.png',
+    link: "https://alphannnn.github.io/Cara-Shop/"
+  },
+  {
+    id: 3,
+    title: "3D-Gamming Website",
+    imageSrc: '/images/third.png',
+    link: "https://your-link-for-gaming.com"
+  },
+  {
+    id: 4,
+    title: "Portfolio Website",
+    imageSrc: '/images/forth.png',
+    link: "https://your-portfolio.com"
+  },
+  {
+    id: 5,
+    title: "",
+    imageSrc: '/images/last.png',
+    link: "#"
   }
-, {
-      id : 4,
-      title : "Portfolio Website" , 
-      imageSrc : '/images/project-4.png',
-    
-  }
-
-
-
 ]
+
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -174,54 +177,64 @@ const Project = () => {
     })
   }, [projectImages.length]);
 
-  return (
-    <section
-      ref={sectionRef}
-      id="horizontal-section"
-      className="relative py-20 bg-[#f6f6f6] overflow-hidden"
-    >
-      {/* Title */}
-      <div className="container mx-auto px-4 mb-16 relative z-10">
-        <h2
-          ref={titleRef}
-          className="text-3xl md:text-4xl lg:text-5xl font-bold text-black text-center mb-4 opacity-0"
-        >
-          My Projects
-        </h2>
+   return (
+  <section
+    ref={sectionRef}
+    id="horizontal-section"
+    className="relative py-20 bg-[#f6f6f6] overflow-hidden"
+  >
+    {/* Title */}
+    <div className="container mx-auto px-4 mb-16 relative z-10">
+      <h2
+        ref={titleRef}
+        className="text-3xl md:text-4xl lg:text-5xl font-bold text-black text-center mb-4 opacity-0"
+      >
+        My Projects
+      </h2>
 
-        <div
-          ref={titleLineRef}
-          className="h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto opacity-0"
-        />
-      </div>
+      <div
+        ref={titleLineRef}
+        className="h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto opacity-0"
+      />
+    </div>
 
+    {/* {Horizontal Scroll Section} */}
+    <div ref={triggerRef} className="overflow-hidden opacity-0">
+      <div
+        ref={horizontalRef}
+        className="horizontal-section flex md:w-[400%] w-[420%]"
+      >
+        {projectImages.map((project) => (
+          <div
+            key={project.id}
+            className="panel relative flex items-center justify-center"
+          >
+            <div className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-8 md:p-12">
+              <img
+                className="project-image max-w-full max-h-full rounded-2xl object-cover"
+                src={project.imageSrc}
+                alt="pro-img"
+              />
 
-      {/* {Horizontal Scroll Section} */}
-      <div ref={triggerRef} className="overflow-hidden opacity-0">
-          <div ref={horizontalRef} className="horizontal-section flex md:w-[400%] w-[420%] ">
-               {projectImages.map((project)=>(
-                    <div key={project.id}
-                    className="panel relative flex items-center justify-center ">
-                          <div className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 ">
-                                  <img 
-                                  className="project-image max-w-full max-h-full rounded-2xl object-cover "
-                                  src={project.imageSrc} 
-                                  alt="pro-img" />
-
-
-                                  <h2 className="project-title flex items-center gap-3 md:text-3xl text-sm md:font-bold text-black mt-6 z-50 text-nowrap hover:text-gray-400 transition-colors duration-300 cursor-pointer ">
-                                    {project.title} <SlShareAlt />
-                                  </h2>
-                          </div>
-                    </div>
-               ))}
+              {/* Project Title with Link */}
+              <h2 className="project-title flex items-center gap-3 md:text-3xl text-sm md:font-bold text-black mt-6 z-50 text-nowrap hover:text-gray-400 transition-colors duration-300 cursor-pointer">
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3"
+                >
+                  {project.title} <SlShareAlt />
+                </a>
+              </h2>
+            </div>
           </div>
+        ))}
       </div>
+    </div>
+  </section>
+);
 
-
-
-    </section>
-  );
 };
 
 export default Project;
