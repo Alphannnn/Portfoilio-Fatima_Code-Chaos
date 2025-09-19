@@ -174,7 +174,7 @@ function ContactSection() {
               transition={{
                 type: "spring",
                 damping: 30,
-                stiffness: 200,
+                stiffness: 200, 
                 duration: 0.8,
               }}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md p-6"
