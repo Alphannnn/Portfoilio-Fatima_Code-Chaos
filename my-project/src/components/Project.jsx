@@ -31,13 +31,13 @@ const Project = () => {
     id: 3,
     title: "3D-Gamming Website",
     imageSrc: '/images/third.png',
-    link: "https://your-link-for-gaming.com"
+    link: "https://alphannnn.github.io/My-Gaming/"
   },
   {
     id: 4,
     title: "Portfolio Website",
     imageSrc: '/images/forth.png',
-    link: "https://your-portfolio.com"
+    link: "#"
   },
   {
     id: 5,
